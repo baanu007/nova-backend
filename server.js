@@ -76,9 +76,18 @@ const GOOGLE_SCOPES = [
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(express.json());
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',')
-    : ['http://localhost:3000', 'https://nova.pplx.app'],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc)
+    if (!origin) return callback(null, true);
+    const allowed = process.env.ALLOWED_ORIGINS
+      ? process.env.ALLOWED_ORIGINS.split(',')
+      : ['http://localhost:3000'];
+    // Always allow perplexity.ai and sites.pplx.app
+    const alwaysAllow = ['perplexity.ai', 'pplx.app', 'railway.app', 'localhost'];
+    if (alwaysAllow.some(d => origin.includes(d))) return callback(null, true);
+    if (allowed.includes(origin)) return callback(null, true);
+    callback(null, true); // permissive for now — lock down in production
+  },
   credentials: true,
 }));
 
