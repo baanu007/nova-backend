@@ -1,0 +1,24 @@
+{
+  "name": "nova-backend",
+  "version": "1.0.0",
+  "description": "NOVA AI Assistant — OAuth Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "googleapis": "^140.0.1",
+    "better-sqlite3": "^9.4.3",
+    "crypto-js": "^4.2.0",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
