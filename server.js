@@ -73,7 +73,11 @@ const GOOGLE_SCOPES = [
 ];
 
 // ── MIDDLEWARE ─────────────────────────────────────────────────────────────────
-app.use(helmet({ crossOriginResourcePolicy: false }));
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+  frameguard: false,              // remove X-Frame-Options so iframe embedding works
+  contentSecurityPolicy: false,  // handled by the PWA itself
+}));
 app.use(express.json());
 app.use(cors({
   origin: (origin, callback) => {
